@@ -1,22 +1,25 @@
 pub mod stable_types;
 
-#[repr(transparent)]
-#[derive(Debug, Copy, Clone)]
-pub struct SendMutPtr<T>(pub *mut T);
+// relics from the past, but not gonna delete in case I need them in the future
 
-unsafe impl<T> Send for SendMutPtr<T> {}
-unsafe impl<T> Sync for SendMutPtr<T> {}
+// #[repr(transparent)]
+// #[derive(Debug, Copy, Clone)]
+// pub struct SendMutPtr<T>(pub *mut T);
 
-#[repr(transparent)]
-#[derive(Debug, Copy, Clone)]
-pub struct SendPtr<T>(pub *const T);
+// unsafe impl<T> Send for SendMutPtr<T> {}
+// unsafe impl<T> Sync for SendMutPtr<T> {}
 
-unsafe impl<T> Send for SendPtr<T> {}
-unsafe impl<T> Sync for SendPtr<T> {}
+// #[repr(transparent)]
+// #[derive(Debug, Copy, Clone)]
+// pub struct SendPtr<T>(pub *const T);
 
-/// A gate for the plugin side, bundles all that is required to handle events for sub-plugins
+// unsafe impl<T> Send for SendPtr<T> {}
+// unsafe impl<T> Sync for SendPtr<T> {}
+
+/// A gate for the plugin side
+/// Basically a receiver for an events channel
 #[repr(C)]
-pub struct BwsSubPluginGate {
+pub struct BwsPluginGate {
     receiver: *const (),
 }
 
@@ -29,7 +32,7 @@ pub mod prelude {
         unit::{unit, BwsUnit},
         vec::BwsVec,
     };
-    pub use crate::{SendMutPtr, SendPtr};
+    // pub use crate::{SendMutPtr, SendPtr};
 }
 
 pub type PluginEntrySignature = unsafe extern "C" fn(
