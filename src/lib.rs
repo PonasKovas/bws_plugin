@@ -1,5 +1,6 @@
 pub mod register;
 pub mod stable_types;
+pub mod vtable;
 
 // relics from the past, but not gonna delete in case I need them in the future
 

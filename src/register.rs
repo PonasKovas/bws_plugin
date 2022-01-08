@@ -11,6 +11,7 @@ pub struct Plugin {
 
 pub type PluginEntrySignature = unsafe extern "C" fn(
     BwsStr,
+    // VTable,
     // prelude::BwsPluginGate,
     // prelude::BwsGlobalState,
 ) -> async_ffi::FfiFuture<BwsUnit>;
