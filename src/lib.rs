@@ -1,3 +1,4 @@
+pub mod register;
 pub mod stable_types;
 
 // relics from the past, but not gonna delete in case I need them in the future
@@ -24,6 +25,7 @@ pub struct BwsPluginGate {
 }
 
 pub mod prelude {
+    pub use crate::register::Plugin;
     pub use crate::stable_types::{
         option::BwsOption,
         slice::BwsSlice,
@@ -34,11 +36,5 @@ pub mod prelude {
     };
     // pub use crate::{SendMutPtr, SendPtr};
 }
-
-pub type PluginEntrySignature = unsafe extern "C" fn(
-    prelude::BwsStr,
-    // prelude::BwsPluginGate,
-    // prelude::BwsGlobalState,
-) -> async_ffi::FfiFuture<prelude::BwsUnit>;
 
 pub const BWS_PLUGIN_ABI_VERSION: u16 = 0;
