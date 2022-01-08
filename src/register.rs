@@ -11,9 +11,11 @@ pub struct Plugin {
 }
 
 pub type PluginEntrySignature = unsafe extern "C" fn(
-    BwsStr,
+    // name of the plugin
+    BwsString,
     BwsVTable,
-    // prelude::BwsPluginGate,
+    // A pointer to the receiver of the events channel for the plugin side
+    *const (),
     // prelude::BwsGlobalState,
 ) -> async_ffi::FfiFuture<BwsUnit>;
 
