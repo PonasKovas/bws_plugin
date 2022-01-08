@@ -1,4 +1,5 @@
 use crate::prelude::*;
+use crate::vtable::BwsVTable;
 use async_ffi::FfiFuture;
 
 #[derive(Clone)]
@@ -11,7 +12,7 @@ pub struct Plugin {
 
 pub type PluginEntrySignature = unsafe extern "C" fn(
     BwsStr,
-    // VTable,
+    BwsVTable,
     // prelude::BwsPluginGate,
     // prelude::BwsGlobalState,
 ) -> async_ffi::FfiFuture<BwsUnit>;

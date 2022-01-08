@@ -58,8 +58,8 @@ vtable! {
 
 pub(crate) static mut VTABLE: BwsVTable = BwsVTable::DEFAULT;
 
-pub fn init(vtable: &'static BwsVTable) {
+pub fn init(vtable: BwsVTable) {
     unsafe {
-        VTABLE = vtable.clone();
+        VTABLE = vtable;
     }
 }
