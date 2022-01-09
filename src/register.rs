@@ -15,9 +15,9 @@ pub type PluginEntrySignature = unsafe extern "C" fn(
     BwsString,
     BwsVTable,
     // A pointer to the receiver of the events channel for the plugin side
-    *const (),
+    SendPtr<()>,
     // prelude::BwsGlobalState,
-) -> async_ffi::FfiFuture<BwsUnit>;
+) -> FfiFuture<BwsUnit>;
 
 /// used to pass plugin information to the host
 #[repr(C)]
@@ -55,7 +55,7 @@ impl Plugin {
         self
     }
     pub fn register(self, reg_fn: unsafe extern "C" fn(RegPluginStruct)) {
-        let plugin_id = unsafe {
+        unsafe {
             reg_fn(RegPluginStruct {
                 name: BwsString::from_string(self.name),
                 version: BwsTuple3(self.version.0, self.version.1, self.version.2),
@@ -72,6 +72,6 @@ impl Plugin {
                 ),
                 entry: self.entry,
             })
-        };
+        }
     }
 }

@@ -1,6 +1,11 @@
+#![feature(future_poll_fn)]
+
+pub mod receive_event;
 pub mod register;
 pub mod stable_types;
 pub mod vtable;
+
+pub use receive_event::receive_event;
 
 #[repr(transparent)]
 #[derive(Debug, Copy, Clone)]

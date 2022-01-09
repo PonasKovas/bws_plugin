@@ -50,9 +50,9 @@ vtable! {
         /// A plugin event id, data pointer and a pointer to the oneshot channel for signaling end of event handling.
         pub poll_recv_plugin_event:
             unsafe extern "C" fn(
-                *const (),
+                SendPtr<()>,
                 &mut FfiContext,
-            ) -> FfiPoll<BwsOption<BwsTuple3<u32, *const (), *const ()>>>,
+            ) -> FfiPoll<BwsOption<BwsTuple3<u32, SendPtr<()>, SendPtr<()>>>>,
     }
 }
 
