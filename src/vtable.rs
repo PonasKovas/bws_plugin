@@ -60,9 +60,10 @@ vtable! {
         /// True if oneshot fires successfully, otherwise false.
         pub fire_oneshot_plugin_event: unsafe extern "C" fn(SendPtr<()>) -> bool,
         /// Takes:
-        /// 1. A string to log
-        /// 2. Log level
-        pub log: unsafe extern "C" fn(BwsStr<'static>, LogLevel),
+        /// 1. The name of the plugin that's calling
+        /// 2. A string to log
+        /// 3. Log level
+        pub log: unsafe extern "C" fn(BwsStr<'static>, BwsStr<'static>, LogLevel),
     }
 }
 
