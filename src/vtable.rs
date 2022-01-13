@@ -1,5 +1,5 @@
 use crate::{prelude::*, register::PluginEntrySignature, LogLevel};
-use async_ffi::{FfiContext, FfiPoll};
+use async_ffi::{FfiContext, FfiFuture, FfiPoll};
 
 // bigass macro, but I hope to have saved time in the long run 😩
 // basically creates a "default" VTable with all functions just panicking
@@ -64,6 +64,9 @@ vtable! {
         /// 2. A string to log
         /// 3. Log level
         pub log: unsafe extern "C" fn(BwsStr<'static>, BwsStr<'static>, LogLevel),
+        /// Takes:
+        /// 1. An FfiFuture for the task to run
+        pub spawn_task: unsafe extern "C" fn(FfiFuture<BwsUnit>),
     }
 }
 

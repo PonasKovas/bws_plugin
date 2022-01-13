@@ -4,11 +4,13 @@
 pub mod log;
 pub mod receive_event;
 pub mod register;
+pub mod spawn_task;
 pub mod stable_types;
 pub mod vtable;
 
 pub use log::log;
 pub use receive_event::{finish_event_handling, receive_event};
+pub use spawn_task::spawn_task;
 
 #[repr(C)]
 pub enum LogLevel {
