@@ -1,4 +1,4 @@
-use crate::{prelude::*, register::PluginEntrySignature};
+use crate::{prelude::*, register::PluginEntrySignature, LogLevel};
 use async_ffi::{FfiContext, FfiPoll};
 
 // bigass macro, but I hope to have saved time in the long run 😩
@@ -53,6 +53,16 @@ vtable! {
                 SendPtr<()>,
                 &mut FfiContext,
             ) -> FfiPoll<BwsOption<BwsTuple3<u32, SendPtr<()>, SendPtr<()>>>>,
+        /// Takes:
+        /// 1. A pointer to the oneshot sender
+        ///
+        /// Returns:
+        /// True if oneshot fires successfully, otherwise false.
+        pub fire_oneshot_plugin_event: unsafe extern "C" fn(SendPtr<()>) -> bool,
+        /// Takes:
+        /// 1. A string to log
+        /// 2. Log level
+        pub log: unsafe extern "C" fn(BwsStr<'static>, LogLevel),
     }
 }
 

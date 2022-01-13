@@ -1,11 +1,23 @@
 #![feature(future_poll_fn)]
+#![deny(unsafe_op_in_unsafe_fn)]
 
+pub mod log;
 pub mod receive_event;
 pub mod register;
 pub mod stable_types;
 pub mod vtable;
 
-pub use receive_event::receive_event;
+pub use log::log;
+pub use receive_event::{finish_event_handling, receive_event};
+
+#[repr(C)]
+pub enum LogLevel {
+    Error,
+    Warning,
+    Info,
+    Debug,
+    Trace,
+}
 
 #[repr(transparent)]
 #[derive(Debug, Copy, Clone)]
@@ -22,7 +34,6 @@ unsafe impl<T> Send for SendPtr<T> {}
 unsafe impl<T> Sync for SendPtr<T> {}
 
 pub mod prelude {
-    pub use crate::register::Plugin;
     pub use crate::stable_types::{
         option::BwsOption,
         slice::BwsSlice,
