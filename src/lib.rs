@@ -4,6 +4,7 @@
 pub mod log;
 pub mod receive_event;
 pub mod register;
+pub mod shutdown;
 pub mod spawn_task;
 pub mod stable_types;
 pub mod vtable;

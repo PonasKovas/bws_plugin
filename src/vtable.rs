@@ -52,7 +52,7 @@ vtable! {
             unsafe extern "C" fn(
                 SendPtr<()>,
                 &mut FfiContext,
-            ) -> FfiPoll<BwsOption<BwsTuple3<u32, SendPtr<()>, SendPtr<()>>>>,
+            ) -> FfiPoll<BwsOption<BwsTuple3<u32, SendMutPtr<()>, SendPtr<()>>>>,
         /// Takes:
         /// 1. A pointer to the oneshot sender
         ///
@@ -71,6 +71,16 @@ vtable! {
         pub get_port: unsafe extern "C" fn() -> u16,
         ///
         pub get_compression_treshold: unsafe extern "C" fn() -> i32,
+        /// Initiates the shutdown of the whole program
+        pub shutdown: unsafe extern "C" fn(),
+        /// Returns:
+        /// 1. A future for receiving on the graceful shutdown broadcast
+        /// 2. A pointer to the atomic u32 to use with
+        ///     vtable::gracefully_exited when finished cleaning up
+        pub register_for_graceful_shutdown: unsafe extern "C" fn() -> BwsTuple2<FfiFuture<BwsUnit>, SendPtr<()>>,
+        /// Takes:
+        /// 1. A pointer to the atomic u32 from vtable::register_for_graceful_shutdown
+        pub gracefully_exited: unsafe extern "C" fn(SendPtr<()>),
     }
 }
 
