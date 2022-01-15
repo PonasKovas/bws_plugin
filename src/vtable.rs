@@ -67,6 +67,10 @@ vtable! {
         /// Takes:
         /// 1. An FfiFuture for the task to run
         pub spawn_task: unsafe extern "C" fn(FfiFuture<BwsUnit>),
+        ///
+        pub get_port: unsafe extern "C" fn() -> u16,
+        ///
+        pub get_compression_treshold: unsafe extern "C" fn() -> i32,
     }
 }
 
