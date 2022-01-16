@@ -16,7 +16,6 @@ pub type PluginEntrySignature = unsafe extern "C" fn(
     BwsVTable,
     // A pointer to the receiver of the events channel for the plugin side
     SendPtr<()>,
-    // prelude::BwsGlobalState,
 ) -> FfiFuture<BwsUnit>;
 
 /// used to pass plugin information to the host

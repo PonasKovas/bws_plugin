@@ -52,13 +52,11 @@ vtable! {
             unsafe extern "C" fn(
                 SendPtr<()>,
                 &mut FfiContext,
-            ) -> FfiPoll<BwsOption<BwsTuple3<u32, SendMutPtr<()>, SendPtr<()>>>>,
+            ) -> FfiPoll<BwsOption<BwsTuple3<usize, SendMutPtr<()>, SendPtr<()>>>>,
         /// Takes:
         /// 1. A pointer to the oneshot sender
-        ///
-        /// Returns:
-        /// True if oneshot fires successfully, otherwise false.
-        pub fire_oneshot_plugin_event: unsafe extern "C" fn(SendPtr<()>) -> bool,
+        /// 2. A bool whether to stop handling event furtherly
+        pub fire_oneshot_plugin_event: unsafe extern "C" fn(SendPtr<()>, bool),
         /// Takes:
         /// 1. The name of the plugin that's calling
         /// 2. A string to log
@@ -81,6 +79,15 @@ vtable! {
         /// Takes:
         /// 1. A pointer to the atomic u32 from vtable::register_for_graceful_shutdown
         pub gracefully_exited: unsafe extern "C" fn(SendPtr<()>),
+        /// Takes:
+        /// 1. Event namespace
+        /// 2. Event name
+        ///
+        /// Returns:
+        /// 1. A future for the event's ID
+        pub get_event_id: unsafe extern "C" fn(BwsStr<'static>, BwsStr<'static>) -> FfiFuture<usize>,
+        //
+        // pub subscribe_to_event: unsafe extern "C" fn(usize, f32, Se)
     }
 }
 
